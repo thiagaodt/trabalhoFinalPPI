@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
     // Função para obter o valor de um cookie pelo nome
     function getCookie(name) {
@@ -90,15 +90,13 @@
 
     // Recuperar e exibir o último acesso
     const lastAccess = getCookie('lastAccess');
-    if (lastAccess) {
-      const formattedDate = new Date(lastAccess).toLocaleString('pt-BR', {
-        dateStyle: 'short',
-        timeStyle: 'short',
-      });
-      document.getElementById('last-access').textContent = `Último acesso: ${formattedDate}`;
-    } else {
-      document.getElementById('last-access').textContent = 'Primeiro acesso nesta sessão.';
-    }
+
+    const formattedDate = new Date(lastAccess).toLocaleString('pt-BR', {
+      dateStyle: 'short',
+      timeStyle: 'short',
+    });
+    document.getElementById('last-access').textContent = `Último acesso: ${formattedDate}`;
+
   });
       document.addEventListener('DOMContentLoaded', () => {
         const contactList = document.getElementById('contact-list');

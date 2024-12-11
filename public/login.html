@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="assets/img/logo-zipp.png" type="image/x-icon">
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+            fontFamily: {
+                'body': ['"Aptos"']
+            }
+        }
+      }
+    }
+  </script>
+    <title>Zipp - Login</title>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100 font-body">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+        <div class="flex flex-row">
+            <img src="assets/img/logo-zipp.png" alt="logo-zipp" class="w-16 h-16">
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-12 ml-12 mt-4">Zipp - Login</h2>
+        </div>
+      <form id="login-form" action="/login" method="POST">
+        <!-- Campo de E-mail -->
+        <div class="mb-4">
+          <label for="username" class="block text-gray-700 font-medium mb-2">Nome de usuário:</label>
+          <input
+            type="username"
+            id="username"
+            name="username"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            placeholder="Digite seu nome de usuário"
+            required
+          />
+        </div>
+        <!-- Campo de Senha -->
+        <div class="mb-4">
+          <label for="password" class="block text-gray-700 font-medium mb-2">Senha:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            placeholder="Digite sua senha"
+            required
+          />
+          <div id="error-message" class="text-red-500 text-sm mb-4" style="display: none;"></div>
+        </div>
+        <!-- Botão de Login -->
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
+        >
+          Entrar
+        </button>
+      </form>
+      <!-- Link para Registrar -->
+      <p class="text-sm text-gray-600 mt-4 text-center justify-center">
+        Não tem uma conta? 
+        <a href="register.html" class="text-blue-600 hover:underline">Registre-se</a>
+      </p>
+    </div>
+    <script>
+      document.getElementById('login-form').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
+    
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const errorMessage = document.getElementById('error-message');
+    
+        try {
+          // Envia a requisição para o backend
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+          });
+    
+          const result = await response.json();
+    
+          if (!result.success) {
+            // Exibe mensagem de erro no frontend
+            errorMessage.textContent = result.message;
+            errorMessage.style.display = 'block';
+          } else {
+            // Redireciona para o menu em caso de sucesso
+            window.location.href = '/main';
+          }
+        } catch (error) {
+          console.error('Erro ao fazer login:', error);
+          errorMessage.textContent = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+          errorMessage.style.display = 'block';
+        }
+      });
+    </script>    
+  </body>
+</html>
